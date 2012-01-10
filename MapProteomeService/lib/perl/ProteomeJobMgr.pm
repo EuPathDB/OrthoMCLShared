@@ -37,11 +37,11 @@ sub getCluster {
     my ($self) = @_;
 
     if (!$self->{cluster}) {
-	my $clusterServer = $self->getConfig('clusterServer');
-	my $clusterUser = $self->getConfig('clusterUserName');
-	$self->{cluster} = CBIL::Util::SshCluster->new($clusterServer,
-							  $clusterUser,
-							  $self);
+    my $clusterServer = $self->getConfig('clusterServer');
+    my $clusterUser = $self->getConfig('clusterUserName');
+    $self->{cluster} = CBIL::Util::SshCluster->new($clusterServer,
+                              $clusterUser,
+                              $self);
     }
     return $self->{cluster};
 }
@@ -90,9 +90,9 @@ sub runClusterTask {
 
     # if not already started, start it up (otherwise the local process was restarted)
     if (!$self->clusterTaskRunning($processIdFile, $user, $server)) {
-	my $cmd = "workflowclustertask $controllerPropFile $logFile $processIdFile $numNodes $time $queue $ppn";
+        my $cmd = "workflowclustertask $controllerPropFile $logFile $processIdFile $numNodes $time $queue $ppn";
         my $sshCmd = "ssh -2 $user\@$server '/bin/bash -rcfile $rcfile -i -c \"$cmd\"'";
-	$self->runCmdInBackground($sshCmd);
+        $self->runCmdInBackground($sshCmd);
     }
 
     my $done = $self->runCmd(0, "ssh -2 $user\@$server '/bin/bash -rcfile $rcfile -i -c \"if [ -a $logFile ]; then tail -1 $logFile; fi\"'");
