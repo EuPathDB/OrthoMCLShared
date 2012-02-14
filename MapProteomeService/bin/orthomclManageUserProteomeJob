@@ -546,7 +546,6 @@ sub handleFailedJobs {
     foreach my $failedJob (@$failedJobs) {
 
       mailServerError("$localRunningDir/$failedJob/info.txt", $failedJob);
-      mailServerErrorToAdmin("$localRunningDir/$failedJob/info.txt", $failedJob, "$localFailedDir/$failedJob");
       $mgr->log("Handling $phase failed job: $failedJob");
       $mgr->log("  moving local job to $phase failed dir");
       mkpath("$localFailedDir");
@@ -555,7 +554,11 @@ sub handleFailedJobs {
       # clean up cluster dir
       $mgr->log("  moving cluster job to $phase cluster failed dir");
       my $clusterRunningJobDir = "$clusterServerDir/$phase/runningJobs/$failedJob";
-      $mgr->runCmd(0, "ssh -2 $clusterUserName\@$clusterServer '/bin/bash -rcfile $rcfile -i -c \"mv $clusterRunningJobDir $clusterServerDir/$phase/failedJobs\"'");
+      my $clusterFailedJobDir = "$clusterServerDir/$phase/failedJobs/$failedJob";
+      
+      mailServerErrorToAdmin("$localFailedDir/$failedJob/info.txt", $failedJob, "$localFailedDir/$failedJob", $clusterFailedJobDir);
+
+      $mgr->runCmd(0, "ssh -2 $clusterUserName\@$clusterServer '/bin/bash -rcfile $rcfile -i -c \"mv $clusterRunningJobDir $clusterFailedJobDir\"'");
     }
 }
 
@@ -578,8 +581,10 @@ has failed because of a server error.  Please try again, or respond to this mail
 }
 
 sub mailServerErrorToAdmin {
-  my ($infoFile, $jobId, $failedJobPath) = @_;
-  my $msg = "See failed job at $failedJobPath";
+  my ($infoFile, $jobId, $localFailedJobPath, $remoteFailedJobPath) = @_;
+  my $cluster = $mgr->getConfig('clusterServer');
+  my $local = `hostname`;
+  my $msg = "See failed job at $local:$localFailedJobPath and\n$cluster:$remoteFailedJobPath";
   mailAdmin($infoFile, $jobId, "OrthoMCL Job - server error", $msg);
 }
 
