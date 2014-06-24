@@ -63,13 +63,15 @@
         </sqlQuery>
 
 
-        <sqlQuery name="SVG">
+        <sqlQuery name="Layout">
             <column name="group_name"/>
-            <column name="svg_content"/>
+            <column name="layout"/>
             <sql>
             <![CDATA[
-                SELECT g.name AS group_name, g.svg_content
+                SELECT g.name AS group_name, l.layout
                 FROM apidb.OrthologGroup g
+				LEFT JOIN apidb.OrthologGroupLayout l 
+				  ON g.ortholog_group_id = l.ortholog_group_id
                         ]]>
             </sql>
         </sqlQuery>
