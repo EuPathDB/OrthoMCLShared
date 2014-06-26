@@ -182,6 +182,7 @@
 	      <columnAttribute name="previous_groups" displayName="Previous Groups" />
 	      <columnAttribute name="ec_numbers" displayName="EC Numbers" />
 	      <columnAttribute name="description" displayName="Description" />
+	      <columnAttribute name="taxon_abbrev" displayName="Taxon Abbreviation" internal="true" inReportMaker="false" />
             </table>
             
             <table name="PFams"
