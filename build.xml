@@ -76,7 +76,7 @@
       <property name="project" value="OrthoMCLShared"/>
       <property name="component" value="Model"/>
     </ant>
-  </target>
+  </target>  
 
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -84,6 +84,7 @@
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
   <target name="OrthoMCLShared-Distributable" depends="ProjectTree">
+
     <copy todir="${targetDir}">
       <fileset dir="${projectsDir}" >
         <exclude name="**/CVS/*" />

@@ -13,7 +13,7 @@
                  displayName="Sequence">
       
       <testParamValues>
-        <paramValue name="full_id">aaeg|AAEL000450-PA</paramValue>
+	<paramValue name="full_id">aaeg|AAEL000450-PA</paramValue>
       </testParamValues>
 
       <!-- =============================================================== -->
@@ -25,32 +25,23 @@
       <!-- =============================================================== -->
       <!-- Reporters -->  
       <!-- =============================================================== -->
-<!--
-       <reporter name="attributesTabular" displayName="%%attributesReporterDisplayName%%" scopes="results"
-                implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
-        <property name="page_size">500</property>
-      </reporter>
-      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results"
-                implementation="org.gusdb.wdk.model.report.TableTabularReporter">
+
+      <reporter name="tabular" displayName="Tab/Excel: summary"
+		implementation="org.gusdb.wdk.model.report.TabularReporter">
       </reporter>
 
--->
-
-     <reporter name="tabular" displayName="Tab/Excel: summary" scopes="results"
-		implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
+      <reporter name="fullRecord" displayName="Text: details"
+		implementation="org.gusdb.wdk.model.report.FullRecordReporter"/>         
+      
+      <reporter name="xml" displayName="XML: details"
+		implementation="org.gusdb.wdk.model.report.XMLReporter">          
+      </reporter>         
+      
+      <reporter name="json" displayName="JSON: details"
+		implementation="org.gusdb.wdk.model.report.JSONReporter">          
       </reporter>
-
-      <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" excludeProjects="EuPathDB"  scopes="record"
-                implementation="org.gusdb.wdk.model.report.FullRecordReporter" />
-
-      <reporter name="xml" displayName="XML: choose from columns and/or tables" excludeProjects="EuPathDB"  scopes=""
-                    implementation="org.gusdb.wdk.model.report.XMLReporter" />
-
-      <reporter name="json" displayName="json: choose from columns and/or tables" excludeProjects="EuPathDB"  scopes=""
-                    implementation="org.gusdb.wdk.model.report.JSONReporter" />
-
-
-      <reporter name="fasta" displayName="FASTA: protein sequence" scopes=""
+      
+      <reporter name="fasta" displayName="FASTA: protein sequence"
 		implementation="org.orthomcl.model.report.FastaReporter">          
       </reporter>
 
@@ -88,20 +79,19 @@
       <!-- Attributes -->  
       <!-- =============================================================== -->
       <favorite noteField="product" />
-
-      <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
-        <columnRef>full_id</columnRef>
-      </primaryKey>
-
-      <idAttribute name="primary_key" displayName="Accession">
-        <text>
-          <![CDATA[
-          $$full_id$$
-          ]]>
-        </text>
-      </idAttribute>
+      
+      <primaryKeyAttribute name="primary_key"
+			   displayName="Accession">
+	<columnRef>full_id</columnRef>
+	<text>
+	  <![CDATA[
+		   $$full_id$$
+	  ]]>
+	</text>                
+      </primaryKeyAttribute>
 
       <attributeQueryRef ref="SequenceAttributes.SequenceAttrs">  
+	<columnAttribute name="full_id" displayName="Full ID" internal="true" inReportMaker="false" />
 	<columnAttribute name="source_id" displayName="Source ID" />
 	<columnAttribute name="length" displayName="Length">
 	  <plugin name="histogram" display="Histogram"
@@ -178,7 +168,7 @@
 	</displayText>
 	<url>
 	  <![CDATA[
-		   @LEGACY_WEBAPP_BASE_URL@/showRecord.do?name=GroupRecordClasses.GroupRecordClass&group_name=$$group_name$$
+		   showRecord.do?name=GroupRecordClasses.GroupRecordClass&group_name=$$group_name$$
 	  ]]>
 	</url>
       </linkAttribute>

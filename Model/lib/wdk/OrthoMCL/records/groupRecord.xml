@@ -13,31 +13,21 @@
       <!-- =============================================================== -->
       <!-- Reporters -->  
       <!-- =============================================================== -->
- <!--
-      <reporter name="attributesTabular" displayName="%%attributesReporterDisplayName%%" scopes="results"
-                implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
-        <property name="page_size">500</property>
-      </reporter>
+            
+            <reporter name="tabular" displayName="Tab/Excel: summary"
+                      implementation="org.gusdb.wdk.model.report.TabularReporter">
+            </reporter>
 
-      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results"
-                implementation="org.gusdb.wdk.model.report.TableTabularReporter">
-      </reporter>
+            <reporter name="fullRecord" displayName="Text: details"
+                    implementation="org.gusdb.wdk.model.report.FullRecordReporter"/>
 
- -->
-<!-- copied from apicommonshared  genomicRecord.xml -->
-     <reporter name="tabular" displayName="Tab/Excel: summary" scopes="results, record" 
-                      implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
-     </reporter>
+            <reporter name="xml" displayName="XML: details"
+                      implementation="org.gusdb.wdk.model.report.XMLReporter">
+            </reporter>
 
-     <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" excludeProjects="EuPathDB"  scopes="record"
-                implementation="org.gusdb.wdk.model.report.FullRecordReporter" />
-
-      <reporter name="xml" displayName="XML: choose from columns and/or tables" excludeProjects="EuPathDB"  scopes=""
-                    implementation="org.gusdb.wdk.model.report.XMLReporter" />
-
-      <reporter name="json" displayName="json: choose from columns and/or tables" excludeProjects="EuPathDB"  scopes=""
-                    implementation="org.gusdb.wdk.model.report.JSONReporter" />
-
+            <reporter name="json" displayName="JSON: details"
+                      implementation="org.gusdb.wdk.model.report.JSONReporter">
+            </reporter>
 
       <!-- =============================================================== -->
       <!-- Views -->
@@ -75,19 +65,18 @@
       <!-- =============================================================== -->
             <favorite noteField="group_name" />
              
-            <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+            <primaryKeyAttribute name="primary_key"
+                                 displayName="Group">
                 <columnRef>group_name</columnRef>
-            </primaryKey>
-
-            <idAttribute name="primary_key" displayName="Group">
                 <text>
                     <![CDATA[
                     $$group_name$$
                     ]]>
-                </text>
-            </idAttribute>
+                </text>                
+            </primaryKeyAttribute>
 
             <attributeQueryRef ref="GroupAttributes.GroupAttrs">  
+                <columnAttribute name="group_name" displayName="Group Name" internal="true" />
 
                 <columnAttribute name="number_of_members" displayName="# Sequences">
                     <plugin name="histogram" display="Histogram"
@@ -184,7 +173,7 @@
 		</displayText>
 		<url>
 		  <![CDATA[
-			   @LEGACY_WEBAPP_BASE_URL@/showRecord.do?name=SequenceRecordClasses.SequenceRecordClass&full_id=$$full_id$$
+			   showRecord.do?name=SequenceRecordClasses.SequenceRecordClass&full_id=$$full_id$$
 		  ]]>
 		</url>
 	      </linkAttribute>

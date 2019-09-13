@@ -15,17 +15,16 @@
       <!-- Attributes -->  
       <!-- =============================================================== -->
             
-            <primaryKey aliasPluginClassName="org.gusdb.wdk.model.record.GenericRecordPrimaryKeyAliasPlugin">
+            <primaryKeyAttribute name="primary_key"
+                                 displayName="ID">
                 <columnRef>helper_id</columnRef>
-            </primaryKey>
-
-            <idAttribute name="primary_key" displayName="ID">
                 <text>
                     <![CDATA[ ]]>
-                </text>
-            </idAttribute>
+                </text>                
+            </primaryKeyAttribute>
 
             <attributeQueryRef ref="HelperAttributes.Counts">
+                <columnAttribute name="helper_id" internal="true" inReportMaker="false"/>
                 <columnAttribute name="organism_count"/>
                 <columnAttribute name="protein_count"/>
                 <columnAttribute name="group_count"/>
