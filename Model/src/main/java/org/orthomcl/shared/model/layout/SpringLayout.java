@@ -133,8 +133,10 @@ public class SpringLayout implements Layout {
     if (nodes.size() <= 2) {
       Iterator<ForceNode> it = nodes.iterator();
       // only need to set one node, the other use the default (0, 0)
-      ForceNode node = it.next();
-      node.getPoint().setLocation(0, graph.getMaxPreferredLength());
+      if (it.hasNext()) {
+	  ForceNode node = it.next();
+	  node.getPoint().setLocation(0, graph.getMaxPreferredLength());
+      }
     }
     else {
       // compute size
