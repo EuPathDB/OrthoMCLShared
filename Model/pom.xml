@@ -13,7 +13,7 @@
   <packaging>jar</packaging>
 
   <dependencies>
-<!-- probably not needed 
+<!-- probably not needed
     <dependency>
       <groupId>org.gusdb</groupId>
       <artifactId>fgputil-util</artifactId>
@@ -40,8 +40,8 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
 
