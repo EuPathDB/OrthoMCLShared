@@ -1,106 +1,38 @@
-<project name="OrthoMCLShared" default="Installation" basedir=".">
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo  Dependencies  oooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo    Checkout    oooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="OrthoMCLShared-ChildCheckout">
-  </target>
-  
-  
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo    Update    oooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="OrthoMCLShared-ChildUpdate" >
-  </target>
-
+<project name="OrthoMCLShared" basedir=".">
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooo  Installation  oooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
-  <target name="OrthoMCLShared-Installation" depends="OrthoMCLShared-MavenInstallation,
-                                                      OrthoMCLShared/MapProteomeService-Installation,
+  <target name="OrthoMCLShared-Installation" depends="OrthoMCLShared/MapProteomeService-Installation,
                                                       OrthoMCLShared/Ppe-Installation,
                                                       OrthoMCLShared/Model-Installation">
-
-    <ant target="defaultProjectInstall"/>
-
-  </target>  
-
-  <target name="OrthoMCLShared-MavenInstallation">
-    <ant target="mavenBuildProject">
+    <ant target="defaultProjectInstall">
       <property name="project" value="OrthoMCLShared"/>
     </ant>
-    <property name="alreadyBuilt" value="true"/>
   </target>
-  
-
-  <!-- oooooooooooooooooo  Installation Postprocess  ooooooooooooooooooooo -->
-
-  <target name="OrthoMCLShared-Installation-postprocess">
-    <echo message="Postprocessing the OrthoMCLShared installation"/>
-
-    <replace dir="${targetDir}/bin" 
-             propertyFile="${targetDir}/config/replacements.prop" > 
-      <include name="**/*" />
-      <replacefilter token="@perl@" property="perl"/>
-    </replace> 
-
-  </target>
-
 
   <!-- ooooooooooooooooooooooo  Install Components  ooooooooooooooooooooooo -->
 
-  <target name="OrthoMCLShared/MapProteomeService-Installation" depends="ProjectTree">
+  <target name="OrthoMCLShared/MapProteomeService-Installation">
     <ant target="defaultComponentInstall">
       <property name="project" value="OrthoMCLShared"/>
       <property name="component" value="MapProteomeService"/>
     </ant>
-  </target>  
+  </target>
 
-  <target name="OrthoMCLShared/Ppe-Installation" depends="ProjectTree">
+  <target name="OrthoMCLShared/Ppe-Installation">
     <ant target="defaultComponentInstall">
       <property name="project" value="OrthoMCLShared"/>
       <property name="component" value="Ppe"/>
     </ant>
-  </target>  
+  </target>
 
-  <target name="OrthoMCLShared/Model-Installation" depends="ProjectTree">
+  <target name="OrthoMCLShared/Model-Installation">
     <ant target="defaultComponentInstall">
       <property name="project" value="OrthoMCLShared"/>
       <property name="component" value="Model"/>
     </ant>
-  </target>  
-
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo  Distributable  ooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="OrthoMCLShared-Distributable" depends="ProjectTree">
-
-    <copy todir="${targetDir}">
-      <fileset dir="${projectsDir}" >
-        <exclude name="**/CVS/*" />
-      </fileset>
-    </copy>  
-  </target>  
-
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo  ProjectTree  ooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="ProjectTree" if="${checkout}">
-    <ant target="projectCheckOut"/>
-  </target>  
+  </target>
 
 </project>
-
-
